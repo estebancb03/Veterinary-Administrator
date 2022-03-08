@@ -1,11 +1,19 @@
 {
   "name": "vpa-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "backend server for VPA app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "Esteban Castañeda Blanco",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
