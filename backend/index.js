@@ -9,6 +9,7 @@ const port = process.env.PORT || 4000;
 dotenv.config();
 connection();
 
+app.use(express.json());
 app.use('/api/veterinarians', veterinaryRoutes);
 
 app.listen(port, () => {
