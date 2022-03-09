@@ -5,7 +5,7 @@ import {
 } from '../controllers/veterinaryController.js';
 
 const router = express.Router();
-router.get('/', toRegister);
+router.post('/', toRegister);
 router.get('/profile', profile);
 
 export default router;
