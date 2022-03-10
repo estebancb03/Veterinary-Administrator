@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import generateID from '../helpers/generateID.js';
 
 const veterinarySchema = mongoose.Schema({
     name: {
@@ -26,7 +27,8 @@ const veterinarySchema = mongoose.Schema({
         default: null
     },
     token: {
-        type: String
+        type: String,
+        default: generateID()
     },
     confirmed: {
         type: Boolean,
