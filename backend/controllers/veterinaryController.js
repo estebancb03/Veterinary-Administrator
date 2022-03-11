@@ -22,7 +22,26 @@ const profile = (req, res) => {
     res.json({ message: 'Showing profile...' });
 }
 
+const toConfirm = async (req, res) => {
+    const { token } = req.params;
+    const userToConfirm = await Veterinary.findOne({ token });
+    console.log(userToConfirm);
+    if(!userToConfirm) {
+        const error = new Error('Invalid token');
+        return res.status(404).json({ message: error.message });
+    }
+    try {
+        userToConfirm.token = null;
+        userToConfirm.confirmed = true;
+        await userToConfirm.save();
+        res.json({ message: 'User already confirmed' });
+    } catch(exception) {
+        console.error(exception);
+    }
+}
+
 export {
     toRegister,
-    profile
+    profile,
+    toConfirm
 }
