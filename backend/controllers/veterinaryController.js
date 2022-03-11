@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Veterinary from "../models/Veterinary.js";
+import generateJWT from "../helpers/generateJWT.js";
 
 const toRegister = async (req, res) => {
     const { email } = req.body;
@@ -52,7 +53,7 @@ const authenticate = async (req, res) => {
         return res.status(403).json({ message: error.message });
     }
     if(await userExist.checkPassword(password)) {
-
+        res.json({ token: generateJWT(userExist.id) });
     } else {
         const error = new Error('Password is not correct');
         return res.status(403).json({ message: error.message });
