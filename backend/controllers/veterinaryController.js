@@ -40,8 +40,28 @@ const toConfirm = async (req, res) => {
     }
 }
 
+const authenticate = async (req, res) => {
+    const { email, password } = req.body;
+    const userExist = await Veterinary.findOne({ email });
+    if(!userExist) {
+        const error = new Error('User not found');
+        return res.status(403).json({ message: error.message });
+    }
+    if(!userExist.confirmed) {
+        const error = new Error('Account not confirmed');
+        return res.status(403).json({ message: error.message });
+    }
+    if(await userExist.checkPassword(password)) {
+
+    } else {
+        const error = new Error('Password is not correct');
+        return res.status(403).json({ message: error.message });
+    }
+}
+
 export {
     toRegister,
     profile,
-    toConfirm
+    toConfirm,
+    authenticate
 }
