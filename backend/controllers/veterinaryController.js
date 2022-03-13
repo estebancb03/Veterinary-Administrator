@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Veterinary from "../models/Veterinary.js";
+import generateID from '../helpers/generateID.js';
 import generateJWT from "../helpers/generateJWT.js";
 
 const toRegister = async (req, res) => {
@@ -61,9 +62,28 @@ const authenticate = async (req, res) => {
     }
 }
 
+const recoverPassword = async (req, res) => {
+    const { email } = req.body;
+    const userExist = await Veterinary.findOne({ email });
+    if(!userExist) {
+        const error = new Error('User doesnt exist');
+        return res.status(400).json({ message: error.message });
+    }
+    try {
+        userExist.token = generateID();
+        await userExist.save();
+        res.json({ message: 'We have sent an email with the instructions'});
+    } catch(exception) {
+        console.error(exception);
+    }
+}
+
 export {
     toRegister,
     profile,
     toConfirm,
-    authenticate
+    authenticate,
+    recoverPassword,
+    verifyToken,
+    newPassword
 }
