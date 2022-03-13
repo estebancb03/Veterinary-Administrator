@@ -81,11 +81,30 @@ const recoverPassword = async (req, res) => {
 const verifyToken = async (req, res) => {
     const { token } = req.params;
     const validToken = await Veterinary.findOne({ token });
+    console.log(validToken);
     if(validToken) {
         res.json({ message: 'Valid token then the user exist' });
     } else {
         const error = new Error('Invalid token');
         return res.status(400).json({ message: error.message });
+    }
+}
+
+const newPassword = async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    const veterinary = await Veterinary.findOne({ token });
+    if(!veterinary) {
+        const error = new Error('There was a mistake');
+        return res.status(400).json({ message: error.message });
+    }
+    try {
+        veterinary.token = null;
+        veterinary.password = password;
+        await veterinary.save();    
+        res.json({ message: 'Password saved correctly' });
+    } catch (exception) {
+        console.error(exception);
     }
 }
 
