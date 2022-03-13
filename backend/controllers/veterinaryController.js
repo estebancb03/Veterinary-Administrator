@@ -78,6 +78,17 @@ const recoverPassword = async (req, res) => {
     }
 }
 
+const verifyToken = async (req, res) => {
+    const { token } = req.params;
+    const validToken = await Veterinary.findOne({ token });
+    if(validToken) {
+        res.json({ message: 'Valid token then the user exist' });
+    } else {
+        const error = new Error('Invalid token');
+        return res.status(400).json({ message: error.message });
+    }
+}
+
 export {
     toRegister,
     profile,
