@@ -20,7 +20,8 @@ const toRegister = async (req, res) => {
 }
 
 const profile = (req, res) => {
-    res.json({ message: 'Showing profile...' });
+    const { veterinary } = req;
+    res.json({ profile: veterinary });
 }
 
 const toConfirm = async (req, res) => {
