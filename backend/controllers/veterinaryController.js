@@ -81,7 +81,6 @@ const recoverPassword = async (req, res) => {
 const verifyToken = async (req, res) => {
     const { token } = req.params;
     const validToken = await Veterinary.findOne({ token });
-    console.log(validToken);
     if(validToken) {
         res.json({ message: 'Valid token then the user exist' });
     } else {

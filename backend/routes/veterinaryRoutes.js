@@ -3,15 +3,21 @@ import {
     toRegister,
     profile,
     toConfirm,
-    authenticate
+    authenticate,
+    recoverPassword,
+    verifyToken,
+    newPassword
 } from '../controllers/veterinaryController.js';
-import checkAuthentication from '../middleware/authenticationMiddleware.js'
+import checkAuthentication from '../middlewares/authenticationMiddleware.js'
 
 const router = express.Router();
 //Public access routes
 router.post('/', toRegister);
 router.get('/confirm/:token', toConfirm);
 router.post('/login', authenticate);
+router.post('/recover-password', recoverPassword);
+router.get('/recover-password/:token', verifyToken);
+router.post('/recover-password:token', newPassword);
 //Private access routes
 router.get('/profile', checkAuthentication, profile);
 
