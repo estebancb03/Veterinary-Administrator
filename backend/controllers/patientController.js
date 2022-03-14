@@ -54,9 +54,29 @@ const updatePatient = async (req, res) => {
     }
 }
 
+const deletePatient = async (req, res) => {
+    const { id } = req.params;
+    const patient = await Patient.findById(id);
+    if(!patient) {
+        const error = new Error('Patient not found');
+        res.status(404).json({ message: error.message });
+    }
+    if(patient.veterinary._id.toString() !== req.veterinary._id.toString()) {
+        const error = new Error('Invalid action');
+        return res.json({ message: error.message });
+    }
+    try {
+        await patient.deleteOne();
+        res.json({ message: 'Patient deleted' });
+    } catch (exception) {
+        console.error(exception);
+    }
+}
+
 export { 
     addPatient, 
     getPatient,
     getPatients,
-    updatePatient
+    updatePatient,
+    deletePatient
 }
