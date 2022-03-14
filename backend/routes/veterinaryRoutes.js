@@ -17,7 +17,7 @@ router.get('/confirm/:token', toConfirm);
 router.post('/login', authenticate);
 router.post('/recover-password', recoverPassword);
 router.get('/recover-password/:token', verifyToken);
-router.post('/recover-password:token', newPassword);
+router.post('/recover-password/:token', newPassword);
 //Private access routes
 router.get('/profile', checkAuthentication, profile);
 
