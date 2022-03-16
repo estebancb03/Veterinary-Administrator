@@ -27,9 +27,10 @@ const Register = () => {
     setAlert({});
     try {
       const url = 'http://localhost:4000/api/veterinarians';
-      const answer = await axios.post(url, { name, email, password });
+      await axios.post(url, { name, email, password });
+      setAlert({ message: 'User created successfully, check your email', error: false });
     } catch(exception) {
-      console.error(exception);
+      setAlert({ message: exception.response.data.message , error: true });
     }
   }
   const { message } = alert;
