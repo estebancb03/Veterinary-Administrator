@@ -1,3 +1,4 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import connection from './config/db.js';
@@ -9,8 +10,18 @@ const port = process.env.PORT || 4000;
 
 dotenv.config();
 connection();
+const allowedDomains = [''];
+const corsOptions = {
+    origin: function(origin, callback) {
+        if(allowedDomains.indexOf(origin) !== -1) 
+            callback(null, true);
+        else 
+            callback(new Error('Not allowed by CORS'));
+    }
+}
 
 app.use(express.json());
+app.use(cors(corsOptions));
 app.use('/api/patients', patientRoutes);
 app.use('/api/veterinarians', veterinaryRoutes);
 
