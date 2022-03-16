@@ -10,7 +10,7 @@ const port = process.env.PORT || 4000;
 
 dotenv.config();
 connection();
-const allowedDomains = [''];
+const allowedDomains = ['http://localhost:3000'];
 const corsOptions = {
     origin: function(origin, callback) {
         if(allowedDomains.indexOf(origin) !== -1) 
