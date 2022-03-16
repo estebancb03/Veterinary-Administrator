@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
@@ -8,7 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
   const [alert, setAlert] = useState({});
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     if([name, email, password, repeatedPassword].includes('')) {
       setAlert({ message: 'There are empty fields', error: true });
@@ -24,6 +25,12 @@ const Register = () => {
       return;
     }
     setAlert({});
+    try {
+      const url = 'http://localhost:4000/api/veterinarians';
+      const answer = await axios.post(url, { name, email, password });
+    } catch(exception) {
+      console.error(exception);
+    }
   }
   const { message } = alert;
   return (
