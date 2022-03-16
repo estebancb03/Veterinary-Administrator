@@ -1,6 +1,31 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Alert from '../components/Alert';
 
 const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatedPassword, setRepeatedPassword] = useState('');
+  const [alert, setAlert] = useState({});
+  const handleSubmit = e => {
+    e.preventDefault();
+    if([name, email, password, repeatedPassword].includes('')) {
+      setAlert({ message: 'There are empty fields', error: true });
+      console.log(alert);
+      return;
+    }
+    if(password !== repeatedPassword) {
+      setAlert({ message: 'The passwords are not equal', error: true });
+      return;
+    }
+    if(password.length < 6) {
+      setAlert({ message: 'The password is too short', error: true });
+      return;
+    }
+    setAlert({});
+  }
+  const { message } = alert;
   return (
     <>
       <div>
@@ -10,7 +35,8 @@ const Register = () => {
           </h1>  
       </div>
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
-        <form action=""> 
+        { message && <Alert alert={ alert } />}
+        <form onSubmit={ handleSubmit }> 
           <div className="my-5">
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
@@ -21,9 +47,10 @@ const Register = () => {
               type="text"
               placeholder="Your name" 
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={ name }
+              onChange={ e => setName(e.target.value) }
             />
           </div>
-
           <div className="my-5">
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
@@ -34,9 +61,10 @@ const Register = () => {
               type="email"
               placeholder="Registration email" 
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={ email }
+              onChange={ e => setEmail(e.target.value) }
             />
           </div>
-
           <div className="my-5">
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
@@ -47,9 +75,10 @@ const Register = () => {
               type="password"
               placeholder="Your password" 
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={ password }
+              onChange={ e => setPassword(e.target.value) }
             />
           </div>
-
           <div className="my-5">
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
@@ -60,16 +89,16 @@ const Register = () => {
               type="password"
               placeholder="Your password" 
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={ repeatedPassword }
+              onChange={ e => setRepeatedPassword(e.target.value) }
             />
           </div>
-
           <input 
             type="submit" 
             value="Sign in"
             className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase 
                        font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto"  
           />
-
           <nav className="mt-10 lg:flex lg:justify-between">
             <Link 
               className="block text-center my-5 text-gray-500 hover:text-gray-600"
