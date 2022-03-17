@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import Veterinary from "../models/Veterinary.js";
 import generateID from '../helpers/generateID.js';
 import generateJWT from "../helpers/generateJWT.js";
+import emailRegistration from '../helpers/emailRegistration.js';
 
 const toRegister = async (req, res) => {
-    const { email } = req.body;
+    const { email, name } = req.body;
     //To prevent duplicated users
     const userExist = await Veterinary.findOne({ email });
     if(userExist) {
@@ -14,6 +15,12 @@ const toRegister = async (req, res) => {
     try {
         const veterinary = new Veterinary(req.body);
         const savedVeterinary = await veterinary.save();
+        //Send email
+        emailRegistration({
+            email,
+            name,
+            token: savedVeterinary.token
+        });
         res.json(savedVeterinary);
     } catch(exception) {
         console.error(exception);
