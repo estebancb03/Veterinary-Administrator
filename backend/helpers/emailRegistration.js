@@ -17,7 +17,7 @@ const emailRegistration = async (data) => {
       text: 'Confirm your account',
       html: `<p>Hi ${ name }, confirm your account in PVA</p>
         <p>Your account is ready, you just have to check it in the following link: 
-        <a href="${ process.env.FRONTEND_URL }/confirm/${ token }">Confirm account</p></a>
+        <a href="${ process.env.FRONTEND_URL }/confirm-account/${ token }">Confirm account</p></a>
         <p>If you don't create this account, you could ignore this email</p>
       `
     });

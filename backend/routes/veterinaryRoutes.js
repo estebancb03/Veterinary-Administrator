@@ -13,7 +13,7 @@ import checkAuthentication from '../middlewares/authenticationMiddleware.js'
 const router = express.Router();
 //Public access routes
 router.post('/', toRegister);
-router.get('/confirm/:token', toConfirm);
+router.get('/confirm-account/:token', toConfirm);
 router.post('/login', authenticate);
 router.post('/recover-password', recoverPassword);
 router.get('/recover-password/:token', verifyToken);
