@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Alert from '../components/Alert';
+import axiosClient from '../config/axios';
 
 const Register = () => {
   const [name, setName] = useState('');
@@ -26,8 +26,8 @@ const Register = () => {
     }
     setAlert({});
     try {
-      const url = 'http://localhost:4000/api/veterinarians';
-      await axios.post(url, { name, email, password });
+      const url = `/veterinarians`;
+      await axiosClient.post(url, { name, email, password });
       setAlert({ message: 'User created successfully, check your email', error: false });
     } catch(exception) {
       setAlert({ message: exception.response.data.message , error: true });

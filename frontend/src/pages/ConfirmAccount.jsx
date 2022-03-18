@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Alert from '../components/Alert';
+import axiosClient from '../config/axios';
 
 const ConfirmAccount = () => {
   const [alert, setAlert] = useState({});
@@ -13,8 +13,8 @@ const ConfirmAccount = () => {
   useEffect(() => {
     const confirmAccount = async () => {
       try {
-        const url = `http://localhost:4000/api/veterinarians/confirm-account/${ id }`;
-        const { data } = await axios(url);
+        const url = `/veterinarians/confirm-account/${ id }`;
+        const { data } = await axiosClient(url);
         setConfirmedAccount(true);
         setAlert({ message: data.message , error: false });
       } catch(exception) {
