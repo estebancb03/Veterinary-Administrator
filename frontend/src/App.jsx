@@ -5,21 +5,24 @@ import Register from './pages/Register';
 import NewPassword from './pages/NewPassword';
 import ConfirmAccount from './pages/ConfirmAccount';
 import RecoverPassword from './pages/RecoverPassword';
+import { AuthenticationProvider } from './context/AuthenticationProvider'; 
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={ <AuthenticationLayout /> }>
-          <Route index element={ <Login /> } />
-          <Route path='register' element={ <Register /> } />
-          <Route path='confirm-account/:id' element={ <ConfirmAccount /> } />
-          <Route path='recover-password' element={ <RecoverPassword /> } />
-          <Route path='recover-password/:token' element={ <NewPassword /> } />
-        </Route>
-      </Routes>
+      <AuthenticationProvider>
+        <Routes>
+          <Route path='/' element={ <AuthenticationLayout /> }>
+            <Route index element={ <Login /> } />
+            <Route path='register' element={ <Register /> } />
+            <Route path='confirm-account/:id' element={ <ConfirmAccount /> } />
+            <Route path='recover-password' element={ <RecoverPassword /> } />
+            <Route path='recover-password/:token' element={ <NewPassword /> } />
+          </Route>
+        </Routes>
+      </AuthenticationProvider>
     </BrowserRouter>
-  )
+  );
 }
 
 export default App
