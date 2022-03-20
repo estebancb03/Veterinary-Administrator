@@ -3,6 +3,7 @@ import Veterinary from "../models/Veterinary.js";
 import generateID from '../helpers/generateID.js';
 import generateJWT from "../helpers/generateJWT.js";
 import emailRegistration from '../helpers/emailRegistration.js';
+import emailRecoverPassword from "../helpers/emailRecoverPassword.js";
 
 const toRegister = async (req, res) => {
     const { email, name } = req.body;
@@ -79,6 +80,12 @@ const recoverPassword = async (req, res) => {
     try {
         userExist.token = generateID();
         await userExist.save();
+        //Send email
+        emailRecoverPassword({
+            email,
+            name: userExist.name,
+            token: userExist.token
+        });
         res.json({ message: 'We have sent an email with the instructions'});
     } catch(exception) {
         console.error(exception);

@@ -1,6 +1,24 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Alert from '../components/Alert';
+import axiosClient from '../config/axios';
 
 const RecoverPassword = () => {
+  const [email, setEmail] = useState('');
+  const [alert, setAlert] = useState({});
+  const handleSubmit = async e => {
+    e.preventDefault();
+    if(email === '' || email.length < 6) {
+      setAlert({ message: 'Email is required', error: true });
+    }
+    try {
+      const { data } = await axiosClient.post('/veterinarians/recover-password', { email });
+      setAlert({ message: data.message, error: false });
+    } catch(exception) {
+      setAlert({ message: exception.response.data.message, error: true });
+    }
+  }
+  const { message } = alert;
   return (
     <>
       <div>
@@ -11,7 +29,8 @@ const RecoverPassword = () => {
       </div>
 
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
-        <form action="">
+        { message && <Alert alert={ alert }/>}
+        <form onSubmit={ handleSubmit }>
           <div className="my-5">
             <label
               className="uppercase text-gray-600 block text-xl font-bold"
@@ -22,6 +41,8 @@ const RecoverPassword = () => {
               type="email"
               placeholder="Registration email" 
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={ email }
+              onChange={ e => setEmail(e.target.value) }
             />
           </div>
 
