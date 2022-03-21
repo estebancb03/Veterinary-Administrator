@@ -3,11 +3,15 @@ import axiosClient from '../config/axios';
 
 const AuthenticationContext = createContext();
 const AuthenticationProvider = ({ children }) => {
+    const [loading, setLoading] = useState(true);
     const [authentication, setAuthentication] = useState({});
     useEffect(() => {
         const authenticateUser = async () => {
             const token = localStorage.getItem('Token');
-            if(!token) return;
+            if(!token) {
+                setLoading(false);
+                return;
+            }
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,11 +25,17 @@ const AuthenticationProvider = ({ children }) => {
             } catch(exception) {
                 setAuthentication({});
             }
+            setLoading(false);
         }
         authenticateUser();
     }, []);
     return(
-        <AuthenticationContext.Provider value={{ authentication, setAuthentication }}>
+        <AuthenticationContext.Provider value={{ 
+            authentication, 
+            setAuthentication, 
+            loading,
+            setLoading
+        }}>
             { children }
         </AuthenticationContext.Provider>
     );
