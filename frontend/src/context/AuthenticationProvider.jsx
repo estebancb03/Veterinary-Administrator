@@ -19,7 +19,7 @@ const AuthenticationProvider = ({ children }) => {
                 }
             }
             try {
-                const url = '/veterinarians/prifile';
+                const url = '/veterinarians/profile';
                 const { data } = await axiosClient(url, config);
                 setAuthentication(data);
             } catch(exception) {

@@ -20,7 +20,7 @@ const Login = () => {
       const url = '/veterinarians/login'
       const { data } = await axiosClient.post(url, { email, password });
       localStorage.setItem('Token', data.token);
-      navigate('/profile');
+      navigate('/admin');
     } catch(exception) {
       setAlert({ message: exception.response.data.message, error: true });
     }
