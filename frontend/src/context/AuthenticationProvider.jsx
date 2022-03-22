@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, createContext } from 'react';
 import axiosClient from '../config/axios';
 
@@ -29,12 +30,19 @@ const AuthenticationProvider = ({ children }) => {
         }
         authenticateUser();
     }, []);
+
+    const logOut = () => {
+        localStorage.removeItem('Token');
+        setAuthentication({});
+    }
+
     return(
         <AuthenticationContext.Provider value={{ 
             authentication, 
             setAuthentication, 
             loading,
-            setLoading
+            setLoading,
+            logOut
         }}>
             { children }
         </AuthenticationContext.Provider>
