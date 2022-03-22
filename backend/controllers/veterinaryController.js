@@ -63,7 +63,12 @@ const authenticate = async (req, res) => {
         return res.status(403).json({ message: error.message });
     }
     if(await userExist.checkPassword(password)) {
-        res.json({ token: generateJWT(userExist.id) });
+        res.json({
+            _id: userExist._id,
+            name: userExist.name,
+            email: userExist.email,
+            token: generateJWT(userExist.id)
+        });
     } else {
         const error = new Error('Password is not correct');
         return res.status(403).json({ message: error.message });

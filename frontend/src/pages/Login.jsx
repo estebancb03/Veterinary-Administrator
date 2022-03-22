@@ -5,6 +5,7 @@ import axiosClient from '../config/axios';
 import useAuthentication from '../hooks/useAuthentication';
 
 const Login = () => {
+  const { setAuthentication } = useAuthentication();
   const navigate = useNavigate();
   const [alert, setAlert] = useState({});
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ const Login = () => {
       const url = '/veterinarians/login'
       const { data } = await axiosClient.post(url, { email, password });
       localStorage.setItem('Token', data.token);
+      setAuthentication(data);
       navigate('/admin');
     } catch(exception) {
       setAlert({ message: exception.response.data.message, error: true });

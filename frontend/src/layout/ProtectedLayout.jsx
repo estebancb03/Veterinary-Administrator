@@ -10,7 +10,7 @@ const ProtectedLayout = () => {
     return (
         <>
             <Header />
-            {  authentication.profile._id ? (
+            {  authentication._id ? (
                 <main className="container mx-auto mt-10">
                     <Outlet />
                 </main>) 
