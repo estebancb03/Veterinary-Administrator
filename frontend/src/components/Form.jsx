@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Alert from './Alert';
+import usePatients from '../hooks/usePatients';
 
 const Form = () => {
     const [name, setName] = useState('');
@@ -9,6 +10,7 @@ const Form = () => {
     const [symptom, setSymptom] = useState('');
     const [alert, setAlert] = useState({});
     const { message } = alert;
+    const { savePatient } = usePatients();
     const handleSubmit = e => {
         e.preventDefault();
         //Form validate
@@ -16,6 +18,8 @@ const Form = () => {
             setAlert({ message: 'All fields are required', error: true });
             return;
         }
+        setAlert({});
+        savePatient({ name, owner, email, date, symptom });
     }
 
     return (

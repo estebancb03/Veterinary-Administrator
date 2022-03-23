@@ -8,25 +8,28 @@ import RecoverPassword from './pages/RecoverPassword';
 import ProtectedLayout from './layout/ProtectedLayout';
 import AuthenticationLayout from './layout/AuthenticationLayout';
 import { AuthenticationProvider } from './context/AuthenticationProvider'; 
+import { PatientsProvider } from './context/PatientsProvider';
 
 function App() {
   return (
     <BrowserRouter>
       <AuthenticationProvider>
-        <Routes>
-          //Public access routes
-          <Route path='/' element={ <AuthenticationLayout /> }>
-            <Route index element={ <Login /> } />
-            <Route path='register' element={ <Register /> } />
-            <Route path='confirm-account/:id' element={ <ConfirmAccount /> } />
-            <Route path='recover-password' element={ <RecoverPassword /> } />
-            <Route path='recover-password/:token' element={ <NewPassword /> } />
-          </Route>
-          //Private access routes
-          <Route path='/admin' element={ <ProtectedLayout /> }>
-            <Route index element={ <ManagePatients /> } />
-          </Route>
+        <PatientsProvider>
+          <Routes>
+            //Public access routes
+            <Route path='/' element={ <AuthenticationLayout /> }>
+              <Route index element={ <Login /> } />
+              <Route path='register' element={ <Register /> } />
+              <Route path='confirm-account/:id' element={ <ConfirmAccount /> } />
+              <Route path='recover-password' element={ <RecoverPassword /> } />
+              <Route path='recover-password/:token' element={ <NewPassword /> } />
+            </Route>
+            //Private access routes
+            <Route path='/admin' element={ <ProtectedLayout /> }>
+              <Route index element={ <ManagePatients /> } />
+            </Route>
         </Routes>
+        </PatientsProvider>
       </AuthenticationProvider>
     </BrowserRouter>
   );
