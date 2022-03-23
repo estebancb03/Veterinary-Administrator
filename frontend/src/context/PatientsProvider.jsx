@@ -16,7 +16,8 @@ const PatientsProvider = ({ children }) => {
             const url = '/patients';
             const { data } = await axiosClient.post(url, patient, config);
             const { createdAt, updatedAt, __v, ...savedPatient } = data;
-            setPatients([savedPatient, ...patients]);
+            const array = [savedPatient, ...patients];
+            setPatients(array);
         } catch(exception) {
             console.error(exception.response.data.message);
         }
