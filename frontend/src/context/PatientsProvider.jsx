@@ -4,6 +4,26 @@ import axiosClient from "../config/axios";
 const PatientsContext = createContext();
 const PatientsProvider = ({ children }) => {
     const [patients, setPatients] = useState([]);
+    useEffect(() => {
+        const getPatients = async () => {
+            try {
+                const token = localStorage.getItem('Token');
+                if(!token) return;
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${ token }`
+                    }
+                }
+                const url = '/patients';
+                const { data } = await axiosClient(url, config);
+                setPatients(data);
+            } catch(exception) {
+                console.error(exception);
+            }
+        }
+        getPatients();
+    }, []);
     const savePatient = async patient => {
         try {
             const token = localStorage.getItem('Token');
