@@ -19,7 +19,7 @@ const patientSchema = mongoose.Schema(
             required: true,
             default: Date.now()
         },
-        sympthom: {
+        symptom: {
             type: String,
             reqired: true
         },
