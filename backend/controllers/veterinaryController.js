@@ -126,6 +126,31 @@ const newPassword = async (req, res) => {
     }
 }
 
+const updateProfile = async (req, res) => {
+    const veterinary = await Veterinary.findById(req.params.id);
+    if(!veterinary) {
+        const error = new Error('There was a mistake');
+        return res.status(400).json({ message: error.message });
+    }
+    if(veterinary.email !== req.body.email) {
+        const existEmail = await Veterinary.findOne({ email });
+        if(existEmail) {
+            const error = new Error('This email is already used');
+            return res.status(400).json({ message: error.message });
+        }
+    }
+    try {
+        veterinary.name = req.body.name;
+        veterinary.email = req.body.email;
+        veterinary.web = req.body.web;
+        veterinary.phone = req.body.phone;
+        const updatedVeterinary = await veterinary.save();
+        res.json(updatedVeterinary);
+    } catch(exception) {
+        console.error(exception);
+    }
+}
+
 export {
     toRegister,
     profile,
@@ -133,5 +158,6 @@ export {
     authenticate,
     recoverPassword,
     verifyToken,
-    newPassword
+    newPassword,
+    updateProfile
 }
