@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import EditProfile from './pages/editProfile';
 import NewPassword from './pages/NewPassword';
+import ChangePassword from './pages/ChangePassword';
 import ManagePatients from './pages/ManagePatients';
 import ConfirmAccount from './pages/ConfirmAccount';
 import RecoverPassword from './pages/RecoverPassword';
@@ -27,6 +29,8 @@ function App() {
             //Private access routes
             <Route path='/admin' element={ <ProtectedLayout /> }>
               <Route index element={ <ManagePatients /> } />
+              <Route path='profile' element={ <EditProfile /> } />
+              <Route path='change-password' element={ <ChangePassword /> } />
             </Route>
         </Routes>
         </PatientsProvider>

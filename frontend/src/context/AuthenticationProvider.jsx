@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, createContext } from 'react';
 import axiosClient from '../config/axios';
+import axios from 'axios';
 
 const AuthenticationContext = createContext();
 const AuthenticationProvider = ({ children }) => {
@@ -30,19 +31,38 @@ const AuthenticationProvider = ({ children }) => {
         }
         authenticateUser();
     }, []);
-
     const logOut = () => {
         localStorage.removeItem('Token');
         setAuthentication({});
     }
-
+    const updateProfile = async info => {
+        const token = localStorage.getItem('Token');
+        if(!token) {
+            setLoading(false);
+            return;
+        }
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${ token }`
+            }
+        }
+        try {
+            const url = `/veterinarians/profile/${ info._id }`;
+            const { data } = await axiosClient.put(url, info, config);
+            return { message: 'Saved correctly' };
+        } catch(exception) {
+            return { message: exception.response.data.message, error: true };
+        }
+    }
     return(
         <AuthenticationContext.Provider value={{ 
             authentication, 
             setAuthentication, 
             loading,
             setLoading,
-            logOut
+            logOut,
+            updateProfile
         }}>
             { children }
         </AuthenticationContext.Provider>
