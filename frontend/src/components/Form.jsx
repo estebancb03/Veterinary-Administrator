@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from './Alert';
 import usePatients from '../hooks/usePatients';
 
 const Form = () => {
+    const [id, setId] = useState(null);
     const [name, setName] = useState('');
     const [owner, setOwner] = useState('');
     const [email, setEmail] = useState('');
@@ -10,7 +11,19 @@ const Form = () => {
     const [symptom, setSymptom] = useState('');
     const [alert, setAlert] = useState({});
     const { message } = alert;
-    const { savePatient } = usePatients();
+    const { savePatient, patient } = usePatients();
+
+    useEffect(() => { 
+        if(patient?.name) {
+            setId(patient._id);
+            setName(patient.name);
+            setOwner(patient.owner);
+            setEmail(patient.email);
+            setDate(patient.date);
+            setSymptom(patient.symptom);
+        }
+    }, [patient]);
+
     const handleSubmit = e => {
         e.preventDefault();
         //Form validate
@@ -18,8 +31,13 @@ const Form = () => {
             setAlert({ message: 'All fields are required', error: true });
             return;
         }
-        setAlert({});
-        savePatient({ name, owner, email, date, symptom });
+        savePatient({ name, owner, email, date, symptom, id });
+        setAlert({ message: 'Patient save correctly', error: false });
+        setName('');
+        setOwner('');
+        setEmail('');
+        setDate('');
+        setSymptom('');
     }
 
     return (
@@ -104,10 +122,12 @@ const Form = () => {
                 <input 
                     type="submit"
                     className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-                    value="Add patient"
+                    value={ id ? 'Save changes' : 'Add patient' }
                 />
             </form>
-            { message && <Alert alert={ alert } /> }
+            <div className="mt-5">
+                { message && <Alert alert={ alert } /> }
+            </div>
         </>
     );
 }
