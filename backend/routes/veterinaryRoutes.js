@@ -6,7 +6,8 @@ import {
     authenticate,
     recoverPassword,
     verifyToken,
-    newPassword
+    newPassword,
+    updateProfile
 } from '../controllers/veterinaryController.js';
 import checkAuthentication from '../middlewares/authenticationMiddleware.js'
 
@@ -20,5 +21,6 @@ router.get('/recover-password/:token', verifyToken);
 router.post('/recover-password/:token', newPassword);
 //Private access routes
 router.get('/profile', checkAuthentication, profile);
+router.put('/profile/:id', checkAuthentication, updateProfile);
 
 export default router;
