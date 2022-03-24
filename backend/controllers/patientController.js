@@ -45,10 +45,10 @@ const updatePatient = async (req, res) => {
     patient.owner = req.body.owner || patient.owner;
     patient.email = req.body.email || patient.email;
     patient.date = req.body.date || patient.date;
-    patient.sympthom = req.body.sympthom || patient.sympthom;
+    patient.symptom = req.body.symptom || patient.symptom;
     try {
         const updatedPatient = await patient.save();
-        res.json(updatePatient);
+        res.json(updatedPatient);
     } catch(exception) {
         console.error(exception);
     }
