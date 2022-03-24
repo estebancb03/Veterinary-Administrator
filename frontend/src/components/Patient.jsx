@@ -1,7 +1,7 @@
 import usePatients from "../hooks/usePatients";
 
 const Patient = ({ patient }) => {
-    const { editPatient } = usePatients();
+    const { editPatient, deletePatient } = usePatients();
     const { name, owner, email, date, symptom, _id  } = patient;
     const formatDate = date => {
         const newDate = new Date(date);
@@ -33,6 +33,7 @@ const Patient = ({ patient }) => {
                 <button
                     type="button"
                     className="py-2 px-10 bg-red-600 hover:bg-red-700 text-white uppercase font-bold rounded-lg"
+                    onClick={ () => { deletePatient(_id) } }
                 >Delete</button>
             </div>
         </div>

@@ -57,12 +57,33 @@ const PatientsProvider = ({ children }) => {
     const editPatient = async patient => {
         setPatient(patient);
     }
+    const deletePatient = id => {
+        const toConfirm = confirm('Do you want to delete this patient?');
+        if(toConfirm) {
+            try {
+                const token = localStorage.getItem('Token');
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${ token }`
+                    }
+                }
+                const url = `/patients/${ id }`
+                const { data } = axiosClient.delete(url, config);
+                const updatedPatients = patients.filter(statePatient => statePatient._id !== id);
+                setPatients(updatedPatients);
+            } catch (exception) {
+                console.error(exception);
+            }
+        }
+    }
     return (
         <PatientsContext.Provider value={{
+            patient,
             patients,
             savePatient,
             editPatient, 
-            patient
+            deletePatient
         }}>
             { children }
         </PatientsContext.Provider>
