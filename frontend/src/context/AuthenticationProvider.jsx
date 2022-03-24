@@ -50,6 +50,7 @@ const AuthenticationProvider = ({ children }) => {
         try {
             const url = `/veterinarians/profile/${ info._id }`;
             const { data } = await axiosClient.put(url, info, config);
+            setAuthentication(data);
             return { message: 'Saved correctly' };
         } catch(exception) {
             return { message: exception.response.data.message, error: true };

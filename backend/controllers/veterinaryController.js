@@ -67,6 +67,8 @@ const authenticate = async (req, res) => {
             _id: userExist._id,
             name: userExist.name,
             email: userExist.email,
+            web: userExist.web,
+            phone: userExist.phone,
             token: generateJWT(userExist.id)
         });
     } else {

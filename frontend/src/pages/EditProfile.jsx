@@ -13,7 +13,6 @@ const EditProfile = () => {
     }, [authentication]);
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log(profile);
         const { name, email } = profile;
         if([name, email].includes('')) {
             setAlert({ message: 'Name and email are required', error: true });
