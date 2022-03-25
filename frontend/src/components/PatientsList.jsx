@@ -8,7 +8,7 @@ const PatientsList = () => {
       { patients.length ? 
         (
           <>
-            <h2 className='font-black text-3xl text-center'>Pastients list</h2>
+            <h2 className='font-black text-3xl text-center'>Patients list</h2>
             <p className='text-xl mt-5 mb-10 text-center'>
               Manage your { '' }
               <span className='text-indigo-600 font-bold'>patients and appointments</span>
