@@ -56,6 +56,26 @@ const AuthenticationProvider = ({ children }) => {
             return { message: exception.response.data.message, error: true };
         }
     }
+    const savePassword = async info => {
+        const token = localStorage.getItem('Token');
+        if(!token) {
+            setLoading(false);
+            return;
+        }
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${ token }`
+            }
+        }
+        try {
+            const url = '/veterinarians/update-password';
+            const { data } = await axiosClient.put(url, info, config);
+            return { message: 'Password updated correctly' };
+        } catch (exception) {
+            return { message: exception.response.data.message, error: true };
+        }
+    }
     return(
         <AuthenticationContext.Provider value={{ 
             authentication, 
@@ -63,7 +83,8 @@ const AuthenticationProvider = ({ children }) => {
             loading,
             setLoading,
             logOut,
-            updateProfile
+            updateProfile,
+            savePassword
         }}>
             { children }
         </AuthenticationContext.Provider>

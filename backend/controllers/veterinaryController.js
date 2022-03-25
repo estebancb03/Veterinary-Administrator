@@ -153,6 +153,27 @@ const updateProfile = async (req, res) => {
     }
 }
 
+const updatePassword = async (req, res) => {
+    const { id } = req.veterinary;
+    const { currentPassword, newPassword } = req.body;
+    const veterinary = await Veterinary.findById(id);
+    if(!veterinary) {
+        const error = new Error('There was a mistake');
+        return res.status(400).json({ message: error.message });
+    }
+    if(!await veterinary.checkPassword(currentPassword)) {
+        const error = new Error('The current password is not correct');
+        return res.status(400).json({ message: error.message });
+    }
+    try {
+        veterinary.password = newPassword;
+        await veterinary.save();
+        res.json({ message: 'Password updated correctly' });
+    } catch(exception) {
+        console.error(exception);
+    }
+}
+
 export {
     toRegister,
     profile,
@@ -161,5 +182,6 @@ export {
     recoverPassword,
     verifyToken,
     newPassword,
-    updateProfile
+    updateProfile,
+    updatePassword
 }
