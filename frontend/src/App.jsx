@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import EditProfile from './pages/editProfile';
+import EditProfile from './pages/EditProfile';
 import NewPassword from './pages/NewPassword';
 import ChangePassword from './pages/ChangePassword';
 import ManagePatients from './pages/ManagePatients';
